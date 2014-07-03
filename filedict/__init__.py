@@ -20,6 +20,9 @@ class FileDict(dict):
         self.filename = filename
         super(FileDict, self).__init__(*args, **kwargs)
 
+    def __getattribute__(self, item):
+        return object.__getattribute__(self, '_get_attribute')(item)
+
     def _get_attribute(self, item):
         if not object.__getattribute__(self, 'loaded'):
             load_func = object.__getattribute__(self, 'load')
@@ -31,9 +34,6 @@ class FileDict(dict):
             value = CallbackWrapper(value, lambda _: save_func())
 
         return value
-
-    def __getattribute__(self, item):
-        return object.__getattribute__(self, '_get_attribute')(item)
 
     def load(self):
         try:
@@ -54,7 +54,7 @@ class FileDict(dict):
 
     def save(self):
         with open(object.__getattribute__(self, 'filename'), 'w') as data_file:
-            pickle.dump(self, data_file)
+            pickle.dump(self.copy(), data_file)
 
     __iter__ = property(lambda self: object.__getattribute__(self, '_get_attribute')('__iter__'))
     __getitem__ = property(lambda self: object.__getattribute__(self, '_get_attribute')('__getitem__'))
@@ -70,3 +70,4 @@ class FileDict(dict):
     __contains__ = property(lambda self: object.__getattribute__(self, '_get_attribute')('__delitem__'))
     __ne__ = property(lambda self: object.__getattribute__(self, '_get_attribute')('__ne__'))
     __repr__ = property(lambda self: object.__getattribute__(self, '_get_attribute')('__ne__'))
+    __class__ = property(lambda self: object.__getattribute__(self, '_get_attribute')('__class__'))
