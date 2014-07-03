@@ -1,0 +1,9 @@
+[run]
+branch = True
+
+[report]
+precision=1
+show_missing=1
+
+[html]
+title=Filedict Coverage Report

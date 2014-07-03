@@ -1,0 +1,4 @@
+FileDict
+========
+
+File-backend dictionary.
