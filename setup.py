@@ -17,10 +17,8 @@ setup(
     packages=['filedict'],
     include_package_data=True,
     test_module=['tests'],
-    setup_requires=[
-        'distribute-install_component'
-    ],
+    setup_requires=[],
     install_requires=[],
     test_suite='tests',
-    tests_require=['should-dsl']
+    tests_require=[]
 )
